@@ -1,18 +1,19 @@
-import { Routes, Route, Router } from 'react-router-dom';
-import Header from './components/Header';
+import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
-import Landing from './components/Landing';
-import Home from './components/Home';
-import Signup from './components/Signup';
-import ResetPassword from './components/ResetPassword';
-import ErrorPage from './components/ErrorPage';
-import Footer from './components/Footer';
+import Header from './Components/Header';
+import Landing from './Components/Landing';
+import Home from './Components/Home';
+import Signup from './Components/Signup';
+import ResetPassword from './Components/ResetPassword';
+import ErrorPage from './Components/ErrorPage';
+import Footer from './Components/Footer';
 
 const App = () => {
   return (
-    <>
-      <Header />
-      <Router>
+    <div>
+      heeeeeeee
+      {/* <Header /> */}
+      {/* <Router>
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/home" element={<Home />} />
@@ -20,9 +21,9 @@ const App = () => {
           <Route path="/resetpassword" element={<ResetPassword />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
-      </Router>
-      <Footer />
-    </>
+      </Router> */}
+      {/* <Footer /> */}
+    </div>
   );
 };
 
