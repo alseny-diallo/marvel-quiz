@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const Landing = () => {
   const refWolverine = useRef(null);
@@ -30,14 +31,18 @@ const Landing = () => {
         onMouseOver={() => setImg('leftImg')}
         onMouseOut={() => clearImg('leftImg')}
       >
-        <button className="btn-welcome">Inscription</button>
+        <Link className="btn-welcome" to="/signup">
+          Inscription
+        </Link>
       </div>
       <div
         className="rightBox"
         onMouseOver={() => setImg('rightImg')}
         onMouseOut={() => clearImg('rightImg')}
       >
-        <button className="btn-welcome">Connexion</button>
+        <Link className="btn-welcome" to="/login">
+          Connexion
+        </Link>
       </div>
     </>
   );
