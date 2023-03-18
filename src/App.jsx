@@ -7,21 +7,23 @@ import Signup from './Components/Signup';
 import ResetPassword from './Components/ResetPassword';
 import ErrorPage from './Components/ErrorPage';
 import Footer from './Components/Footer';
+import Login from './Components/Login';
 
 const App = () => {
   return (
     <>
-      <Header />
       <Router>
+        <Header />
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/home" element={<Home />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/resetpassword" element={<ResetPassword />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
+        <Footer />
       </Router>
-      <Footer />
     </>
   );
 };

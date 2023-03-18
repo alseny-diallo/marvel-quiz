@@ -1,5 +1,9 @@
 const Signup = () => {
-  return <div>Signup</div>;
+  return (
+    <div className="signUpLoginBox">
+      <div className="slContainer">Sign Up</div>
+    </div>
+  );
 };
 
 export default Signup;
