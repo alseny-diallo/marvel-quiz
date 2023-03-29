@@ -1,10 +1,10 @@
 const configs = {
-  api_key: process.env.API_KEY,
-  auth_domain: process.env.AUTH_DOMAIN,
-  project_id: process.env.PROJECT_ID,
-  storage_bucket: process.env.STORAGE_BUCKET,
-  messaging_sender_id: process.env.MESSAGING_SENDER_ID,
-  app_id: process.env.APP_ID,
+  api_key: import.meta.env.VITE_API_KEY,
+  auth_domain: import.meta.env.VITE_AUTH_DOMAIN,
+  project_id: import.meta.env.VITE_PROJECT_ID,
+  storage_bucket: import.meta.env.VITE_STORAGE_BUCKET,
+  messaging_sender_id: import.meta.env.VITE_MESSAGING_SENDER_ID,
+  app_id: import.meta.env.VITE_APP_ID,
 };
 
 export default configs;
