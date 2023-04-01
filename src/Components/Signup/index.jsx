@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import auth from '../Firebase/Firebase';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Signup = () => {
   const initialValues = {
@@ -8,11 +11,25 @@ const Signup = () => {
     confirmPassword: '',
   };
   const [loginData, setLoginData] = useState(initialValues);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
   const handleChange = (event) => {
     setLoginData({
       ...loginData,
       [event.target.id]: event.target.value,
     });
+  };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const { email, password } = loginData;
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((user) => {
+        setLoginData({ ...initialValues });
+        navigate('/login');
+      })
+      .catch((error) => {
+        setError(error);
+      });
   };
   const { pseudo, email, password, confirmPassword } = loginData;
   const btn =
@@ -30,8 +47,9 @@ const Signup = () => {
         <div className="formBoxLeftSignup"></div>
         <div className="formBoxRight">
           <div className="formContent">
+            {error && <span>{error.message}</span>}
             <h2>Inscription</h2>
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className="inputBox">
                 <input
                   type="text"
@@ -41,7 +59,7 @@ const Signup = () => {
                   onChange={handleChange}
                   required
                 />
-                <label htmlFor="pseudo"></label>
+                <label htmlFor="pseudo">Pseudo</label>
               </div>
 
               <div className="inputBox">
@@ -82,6 +100,11 @@ const Signup = () => {
               </div>
               {btn}
             </form>
+            <div className="" linkContainer>
+              <Link className="simpleLink" to="/login">
+                Deja inscrit? connectez-vous!
+              </Link>
+            </div>
           </div>
         </div>
       </div>
