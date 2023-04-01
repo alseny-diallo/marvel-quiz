@@ -1,5 +1,5 @@
-const Context = () => {
-  return <div>Context</div>;
-};
+import { createContext } from 'react';
 
-export default Context;
+const FirebaseContext = createContext(null);
+
+export default FirebaseContext;
