@@ -6,11 +6,21 @@ import { QuizMarvel } from '../QuizMarvel';
 const Quiz = ({ user }) => {
   const [levels, setLevels] = useState(['debutant', 'confirme', 'expert']);
   const [quizLevel, setQuizLevel] = useState(0);
-  const loadQuestions = (level) => {};
+  const [maxQuestions, setMaxQuestions] = useState(10);
+  const [storedQuestions, setStoredQuestions] = useState([]);
+  const loadQuestions = (level) => {
+    const fetchArrayQuizz = QuizMarvel[0].quizz[level];
+    if (fetchArrayQuizz.length >= maxQuestions) {
+      const newArray = fetchArrayQuizz.map(({ answer, ...rest }) => rest);
+      setStoredQuestions(newArray);
+    } else {
+      console.log('pas assez de question');
+    }
+  };
   useEffect(() => {
     loadQuestions(levels[quizLevel]);
     return () => {};
-  }, [quizLevel]);
+  }, [quizLevel, storedQuestions]);
   return (
     <div>
       <Levels />
