@@ -1,7 +1,16 @@
+import { useState, useEffect } from 'react';
 import Levels from '../Levels';
 import ProgressBar from '../ProgressBar';
+import { QuizMarvel } from '../QuizMarvel';
 
 const Quiz = ({ user }) => {
+  const [levels, setLevels] = useState(['debutant', 'confirme', 'expert']);
+  const [quizLevel, setQuizLevel] = useState(0);
+  const loadQuestions = (level) => {};
+  useEffect(() => {
+    loadQuestions(levels[quizLevel]);
+    return () => {};
+  }, [quizLevel]);
   return (
     <div>
       <Levels />
