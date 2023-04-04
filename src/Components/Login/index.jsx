@@ -20,7 +20,7 @@ const Login = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     signInWithEmailAndPassword(auth, loginData.email, loginData.password)
-      .then((user) => {
+      .then(() => {
         setLoginData({ ...initialValues });
         navigate('/welcome');
       })

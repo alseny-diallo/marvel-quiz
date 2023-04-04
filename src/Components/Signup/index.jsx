@@ -23,7 +23,7 @@ const Signup = () => {
     event.preventDefault();
     const { email, password } = loginData;
     createUserWithEmailAndPassword(auth, email, password)
-      .then((user) => {
+      .then(() => {
         setLoginData({ ...initialValues });
         navigate('/login');
       })
