@@ -8,6 +8,7 @@ import ResetPassword from './Components/ResetPassword';
 import ErrorPage from './Components/ErrorPage';
 import Footer from './Components/Footer';
 import Login from './Components/Login';
+import Welcome from './Components/Welcome';
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/welcome" element={<Welcome />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/resetpassword" element={<ResetPassword />} />
