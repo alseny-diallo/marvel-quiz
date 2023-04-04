@@ -5,14 +5,14 @@ import auth from '../Firebase/Firebase';
 
 const ResetPassword = () => {
   const [email, setEmail] = useState('');
-  const [message, setMessage] = useState({ success: '', error: '' });
+  const [message, setMessage] = useState({ success: '', error: null });
   const navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
     sendPasswordResetEmail(auth, email)
       .then(() => {
         setMessage({
-          error: '',
+          error: null,
           success: 'consultez votre email pour changer le mot de passe',
         });
         setTimeout(() => {
@@ -43,7 +43,7 @@ const ResetPassword = () => {
                 {message.success}
               </span>
             )}
-            {message.error.length > 0 && <span>{message.error}</span>}
+            {message.error && <span>{message.error.message}</span>}
             <h2>Mot de passe oublié?</h2>
             <form onSubmit={handleSubmit}>
               <div className="inputBox">
