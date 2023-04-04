@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import auth from '../Firebase/Firebase';
+import auth, { user } from '../Firebase/Firebase';
 import { Link, useNavigate } from 'react-router-dom';
+import { setDoc } from 'firebase/firestore';
 
 const Signup = () => {
   const initialValues = {
@@ -21,11 +22,17 @@ const Signup = () => {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    const { email, password } = loginData;
+    const { email, password, pseudo } = loginData;
     createUserWithEmailAndPassword(auth, email, password)
+      .then((authUser) => {
+        return setDoc(user(authUser.user.uid), {
+          pseudo,
+          email,
+        });
+      })
       .then(() => {
         setLoginData({ ...initialValues });
-        navigate('/login');
+        navigate('/welcome');
       })
       .catch((error) => {
         setError(error);
@@ -87,7 +94,7 @@ const Signup = () => {
               </div>
               <div className="inputBox">
                 <input
-                  type="confirmPassword"
+                  type="password"
                   value={confirmPassword}
                   id="confirmPassword"
                   autoComplete="off"

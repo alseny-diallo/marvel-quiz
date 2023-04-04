@@ -1,5 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
+import { getFirestore, doc } from 'firebase/firestore';
 import configs from '../../config/base';
 
 const config = {
@@ -18,3 +19,5 @@ const config = {
 const FirebaseApp = initializeApp(config);
 const auth = getAuth(FirebaseApp);
 export default auth;
+export const db = getFirestore();
+export const user = (uid) => doc(db, `users/${uid}`);
