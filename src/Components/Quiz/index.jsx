@@ -8,29 +8,58 @@ const Quiz = ({ user }) => {
   const [quizLevel, setQuizLevel] = useState(0);
   const [maxQuestions, setMaxQuestions] = useState(10);
   const [storedQuestions, setStoredQuestions] = useState([]);
-  const loadQuestions = (level) => {
-    const fetchArrayQuizz = QuizMarvel[0].quizz[level];
-    if (fetchArrayQuizz.length >= maxQuestions) {
-      const newArray = fetchArrayQuizz.map(({ answer, ...rest }) => rest);
-      setStoredQuestions(newArray);
-    } else {
-      console.log('pas assez de question');
-    }
-  };
+  const [question, setQuestion] = useState(null);
+  const [options, setOptions] = useState([]);
+  const [idQuestion, setIdQuestion] = useState(0);
+  const [isDisabled, setIsDisabled] = useState(true);
+  const [userAnswer, setUserAnswer] = useState(null);
+
   useEffect(() => {
+    const loadQuestions = (level) => {
+      const fetchArrayQuizz = QuizMarvel[0].quizz[level];
+      if (fetchArrayQuizz.length >= maxQuestions) {
+        const newArray = fetchArrayQuizz.map(({ answer, ...rest }) => rest);
+        setStoredQuestions(newArray);
+      } else {
+        console.log('pas assez de question');
+      }
+    };
     loadQuestions(levels[quizLevel]);
     return () => {};
-  }, [quizLevel, storedQuestions]);
+  }, [quizLevel, maxQuestions, levels]);
+
+  useEffect(() => {
+    if (storedQuestions.length > 0) {
+      setQuestion(storedQuestions[idQuestion].question);
+      setOptions(storedQuestions[idQuestion].options);
+    }
+    return () => {};
+  }, [storedQuestions, idQuestion]);
+
+  const submitAnswer = (selectedAnswer) => {
+    setUserAnswer(selectedAnswer);
+    setIsDisabled(false);
+  };
+
   return (
     <div>
       <Levels />
       <ProgressBar />
-      <h2>Notre question Quiz</h2>
-      <p className="answerOptions">Question 1</p>
-      <p className="answerOptions">Question 2</p>
-      <p className="answerOptions">Question 3</p>
-      <p className="answerOptions">Question 4</p>
-      <button className="btnSubmit">Suivant</button>
+      <h2>{question}</h2>
+      {options.map((option, index) => (
+        <p
+          key={index}
+          className={`answerOptions ${
+            userAnswer === option ? 'selected' : null
+          }`}
+          onClick={() => submitAnswer(option)}
+        >
+          {option}
+        </p>
+      ))}
+      <button className="btnSubmit" disabled={isDisabled}>
+        Suivant
+      </button>
     </div>
   );
 };
