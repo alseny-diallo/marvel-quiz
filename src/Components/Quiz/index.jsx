@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import Levels from '../Levels';
 import ProgressBar from '../ProgressBar';
 import { QuizMarvel } from '../QuizMarvel';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Quiz = ({ user }) => {
   const [levels, setLevels] = useState(['debutant', 'confirme', 'expert']);
@@ -32,14 +34,16 @@ const Quiz = ({ user }) => {
   }, [quizLevel, maxQuestions, levels]);
 
   useEffect(() => {
-    toast.info(`Welcome`, {
-      position: 'top-right',
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: false,
-    });
+    if (user?.pseudo) {
+      toast.info(`Bienvenue ${user.pseudo} et bonne chance `, {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+      });
+    }
   }, []);
 
   useEffect(() => {
@@ -66,11 +70,15 @@ const Quiz = ({ user }) => {
     setIdQuestion(idQuestion + 1);
     if (userAnswer === goodAnswer) {
       setScore(score + 1);
+      toast.success('Bravo +1');
+    } else {
+      toast.error('Oups mauvaise reponse!');
     }
   };
 
   return (
     <div>
+      <ToastContainer />
       <Levels />
       <ProgressBar />
       <h2>{question}</h2>
