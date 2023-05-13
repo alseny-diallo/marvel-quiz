@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, Fragment } from 'react';
 import Levels from '../Levels';
 import ProgressBar from '../ProgressBar';
 import { QuizMarvel } from '../QuizMarvel';
+import QuizOver from '../QuizOver';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -16,6 +17,7 @@ const Quiz = ({ user }) => {
   const [isDisabled, setIsDisabled] = useState(true);
   const [userAnswer, setUserAnswer] = useState(null);
   const [score, setScore] = useState(0);
+  const [quizEnd, setQuizend] = useState(false);
   const storedDataRef = useRef(null);
 
   useEffect(() => {
@@ -64,6 +66,7 @@ const Quiz = ({ user }) => {
 
   const loadNextQuestion = () => {
     if (idQuestion === maxQuestions - 1) {
+      setQuizend(true);
       return null;
     }
     const goodAnswer = storedDataRef.current[idQuestion].answer;
@@ -76,31 +79,39 @@ const Quiz = ({ user }) => {
     }
   };
 
+  const gameOver = () => {};
+
   return (
-    <div>
-      <ToastContainer />
-      <Levels />
-      <ProgressBar />
-      <h2>{question}</h2>
-      {options.map((option, index) => (
-        <p
-          key={index}
-          className={`answerOptions ${
-            userAnswer === option ? 'selected' : null
-          }`}
-          onClick={() => submitAnswer(option)}
-        >
-          {option}
-        </p>
-      ))}
-      <button
-        className='btnSubmit'
-        onClick={loadNextQuestion}
-        disabled={isDisabled}
-      >
-        Suivant
-      </button>
-    </div>
+    <Fragment>
+      {!quizEnd ? (
+        <>
+          <ToastContainer />
+          <Levels />
+          <ProgressBar idQuestion={idQuestion} maxQuestions={maxQuestions} />
+          <h2>{question}</h2>
+          {options.map((option, index) => (
+            <p
+              key={index}
+              className={`answerOptions ${
+                userAnswer === option ? 'selected' : null
+              }`}
+              onClick={() => submitAnswer(option)}
+            >
+              {option}
+            </p>
+          ))}
+          <button
+            className='btnSubmit'
+            onClick={loadNextQuestion}
+            disabled={isDisabled}
+          >
+            {idQuestion < maxQuestions - 1 ? 'Suivant' : 'Terminer'}
+          </button>
+        </>
+      ) : (
+        <QuizOver />
+      )}
+    </Fragment>
   );
 };
 
