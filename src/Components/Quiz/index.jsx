@@ -7,7 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Quiz = ({ user }) => {
-  const [levels, setLevels] = useState(['debutant', 'confirme', 'expert']);
+  const levels = ['debutant', 'confirme', 'expert'];
   const [quizLevel, setQuizLevel] = useState(0);
   const [maxQuestions, setMaxQuestions] = useState(10);
   const [storedQuestions, setStoredQuestions] = useState([]);
@@ -18,6 +18,7 @@ const Quiz = ({ user }) => {
   const [userAnswer, setUserAnswer] = useState(null);
   const [score, setScore] = useState(0);
   const [quizEnd, setQuizend] = useState(false);
+  const [percent, setPercent] = useState(0);
   const storedDataRef = useRef(null);
 
   useEffect(() => {
@@ -33,7 +34,7 @@ const Quiz = ({ user }) => {
     };
     loadQuestions(levels[quizLevel]);
     return () => {};
-  }, [quizLevel, maxQuestions, levels]);
+  }, [quizLevel, maxQuestions]);
 
   useEffect(() => {
     if (user?.pseudo) {
@@ -64,9 +65,18 @@ const Quiz = ({ user }) => {
     setIsDisabled(false);
   };
 
+  const gameOver = () => {
+    const gradePercent = getPercentage(maxQuestions, score);
+    if (gradePercent >= 50) {
+      setQuizLevel(quizLevel + 1);
+    }
+    setPercent(gradePercent);
+    setQuizend(true);
+  };
+
   const loadNextQuestion = () => {
     if (idQuestion === maxQuestions - 1) {
-      setQuizend(true);
+      gameOver();
       return null;
     }
     const goodAnswer = storedDataRef.current[idQuestion].answer;
@@ -78,8 +88,7 @@ const Quiz = ({ user }) => {
       toast.error('Oups mauvaise reponse!');
     }
   };
-
-  const gameOver = () => {};
+  const getPercentage = (maxQuestions, score) => (score / maxQuestions) * 100;
 
   return (
     <Fragment>
@@ -109,7 +118,14 @@ const Quiz = ({ user }) => {
           </button>
         </>
       ) : (
-        <QuizOver />
+        <QuizOver
+          ref={storedDataRef}
+          levels={levels}
+          socre={score}
+          maxQuestions={maxQuestions}
+          quizLevel={quizLevel}
+          percent={percent}
+        />
       )}
     </Fragment>
   );
