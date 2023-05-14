@@ -20,7 +20,7 @@ const QuizOver = forwardRef((props, ref) => {
               <p className='successMsg'>Bravo, passez au niveau suivant !</p>
               <button
                 className='btnResult success'
-                onClick={() => loadNextLevel()}
+                onClick={() => loadNextLevel(quizLevel)}
               >
                 Niveau Suivant
               </button>
