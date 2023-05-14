@@ -90,6 +90,13 @@ const Quiz = ({ user }) => {
   };
   const getPercentage = (maxQuestions, score) => (score / maxQuestions) * 100;
 
+  const loadNextLevelQuestions = (levelValue) => {
+    setQuizLevel(levelValue);
+    setIdQuestion(0);
+    setScore(0);
+    setQuizend(false);
+  };
+
   return (
     <Fragment>
       {!quizEnd ? (
@@ -121,10 +128,11 @@ const Quiz = ({ user }) => {
         <QuizOver
           ref={storedDataRef}
           levels={levels}
-          socre={score}
+          score={score}
           maxQuestions={maxQuestions}
           quizLevel={quizLevel}
           percent={percent}
+          loadNextLevel={() => loadNextLevelQuestions(quizLevel)}
         />
       )}
     </Fragment>

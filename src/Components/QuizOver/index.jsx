@@ -1,7 +1,8 @@
 import React, { forwardRef, useEffect, useState } from 'react';
 const QuizOver = forwardRef((props, ref) => {
   const [asked, setAsked] = useState([]);
-  const { levels, score, maxQuestions, quizlevel, percent } = props;
+  const { levels, score, maxQuestions, quizLevel, percent, loadNextLevel } =
+    props;
 
   useEffect(() => {
     setAsked(ref.current);
@@ -14,15 +15,25 @@ const QuizOver = forwardRef((props, ref) => {
     score >= averageGrade ? (
       <>
         <div className='stepsBtnContainer'>
-          {quizlevel < levels.length ? (
+          {quizLevel < levels.length - 1 ? (
             <>
               <p className='successMsg'>Bravo, passez au niveau suivant !</p>
-              <button className='btnResult success'>Niveau Suivant</button>
+              <button
+                className='btnResult success'
+                onClick={() => loadNextLevel()}
+              >
+                Niveau Suivant
+              </button>
             </>
           ) : (
             <>
               <p className='successMsg'>Bravo, vous êtes un expert !</p>
-              <button className='btnResult gameOver'>Niveau Suivant</button>
+              <button
+                className='btnResult gameOver'
+                onClick={() => loadNextLevel(0)}
+              >
+                Recommener
+              </button>
             </>
           )}
         </div>
