@@ -23,6 +23,12 @@
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.9",
     "@vitejs/plugin-react": "^3.0.0",
+    "eslint": "^8.41.0",
+    "eslint-plugin-react": "^7.32.2",
     "vite": "^4.0.0"
-  }
+  },
+  "main": "index.js",
+  "repository": "https://github.com/alseny-diallo/marvel-quiz.git",
+  "author": "alseny-diallo <alsenydiallo0409@gmail.com>",
+  "license": "MIT"
 }

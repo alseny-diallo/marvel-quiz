@@ -6,10 +6,11 @@ import QuizOver from '../QuizOver';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+const maxQuestions = 10;
+
 const Quiz = ({ user }) => {
-  const levels = ['debutant', 'confirme', 'expert'];
   const [quizLevel, setQuizLevel] = useState(0);
-  const [maxQuestions, setMaxQuestions] = useState(10);
+  const levels = ['debutant', 'confirme', 'expert'];
   const [storedQuestions, setStoredQuestions] = useState([]);
   const [question, setQuestion] = useState(null);
   const [options, setOptions] = useState([]);
@@ -26,6 +27,7 @@ const Quiz = ({ user }) => {
       const fetchArrayQuizz = QuizMarvel[0].quizz[level];
       if (fetchArrayQuizz.length >= maxQuestions) {
         storedDataRef.current = fetchArrayQuizz;
+        // eslint-disable-next-line no-unused-vars
         const newArray = fetchArrayQuizz.map(({ answer, ...rest }) => rest);
         setStoredQuestions(newArray);
       } else {
@@ -58,7 +60,7 @@ const Quiz = ({ user }) => {
     }
 
     return () => {};
-  }, [storedQuestions, idQuestion]);
+  }, [quizLevel, maxQuestions, storedDataRef, setStoredQuestions]);
 
   const submitAnswer = (selectedAnswer) => {
     setUserAnswer(selectedAnswer);
