@@ -14,7 +14,7 @@ const Welcome = () => {
     const listener = onAuthStateChanged(auth, (user) => {
       user ? setUserSession(user) : navigate('/');
     });
-    if (!!userSession) {
+    if (userSession) {
       const refUser = user(userSession.uid);
       getDoc(refUser)
         .then((snapshot) => {
